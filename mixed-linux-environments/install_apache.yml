@@ -1,0 +1,38 @@
+---
+- hosts: all
+  become: true
+  tasks: 
+
+  - name: Update repository index
+    ansible.builtin.package:
+      update_cache: yes
+
+#### Ubuntu/Debian Section ####
+
+  - name: Install apache2 package
+    package:
+      name: apache2
+      state: latest
+    when: ansible_os_family == "Debian"
+
+  - name: Install support for php
+    package:
+       name: libapache2-mod-php
+       state: latest
+    when: ansible_os_family == "Debian"
+
+#### EL Section ####
+
+
+  
+  - name: Install apache2 package
+    package:
+      name: httpd
+      state: latest
+    when: ansible_os_family == "RedHat"
+
+  - name: Install support for php
+    package:
+       name: php
+       state: latest
+    when: ansible_os_family == "RedHat"
