@@ -1,0 +1,45 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+
+    - name: install updates for RHEL distros
+      package:
+        update_only: yes
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: install updates for Debian distros
+      package:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+- hosts: all
+  become: true
+  tasks:
+  
+  - name: Install common packages
+    package:
+      name:
+        - htop
+        - neofetch
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: Install apache on web servers
+    package:
+      name: 
+        - apache2
+        - libapache2-mod-php
+
+- hosts: db_servers
+  become: true
+  tasks:
+
+  - name: install mariadb package on db servers
+    package: 
+      name: mariadb
+      state: latest
