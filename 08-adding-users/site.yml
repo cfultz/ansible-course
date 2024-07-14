@@ -1,0 +1,88 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+
+    - name: install updates for RHEL distros
+      tags: always
+      package:
+        update_only: yes
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: install updates for Debian distros
+      tags: always
+      package:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+- hosts: all
+  become: true
+  tasks:
+  
+  - name: Install common packages
+    package:
+      name:
+        - htop
+        - neofetch
+
+  
+
+- hosts: web_servers
+  become: true
+  tags: debian
+  tasks:
+
+  - name: Install apache on web servers
+    tags: apache
+    package:
+      name: 
+        - apache2
+        - libapache2-mod-php
+  
+  - name: Copy html file
+    tags: website
+    copy: 
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Add lfultz account
+    tags: debian
+    user:
+      name: lfultz
+      comment: Logan Fultz
+      uid: 1040
+      gid: 1040
+      group: sudo
+      shell: /bin/bash
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
+
+
+- hosts: db_servers
+  tags: db, el
+  become: true
+  tasks:
+
+  - name: install mariadb package on db servers
+    package: 
+      name: mariadb
+      state: latest
+
+  - name: Add lfultz account
+    tags: el
+    user:
+      name: lfultz
+      comment: Logan Fultz
+      uid: 1040
+      gid: 1040
+      group: wheel
+      shell: /bin/bash
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
