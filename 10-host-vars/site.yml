@@ -22,16 +22,12 @@
   roles: 
     - base
 
-  
-
 - hosts: web_servers
   become: true
   tags: web
   roles: 
     - web_servers
   
-
-
 - hosts: db_servers
   tags: db,
   become: true
