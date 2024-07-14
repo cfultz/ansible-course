@@ -1,0 +1,15 @@
+- name: Install apache on web servers
+  tags: apache
+  package:
+    name: 
+      - apache2
+      - libapache2-mod-php
+  
+- name: Copy html file
+  tags: website
+  copy: 
+    src: default_site.html
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0644

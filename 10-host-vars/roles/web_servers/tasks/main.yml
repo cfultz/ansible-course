@@ -3,8 +3,8 @@
   tags: apache
   package:
     name: 
-      - apache2
-      - libapache2-mod-php
+      - "{{ webserver_package }}"
+      - "{{ php_package }}"
   
 - name: Copy html file
   tags: website
@@ -14,3 +14,4 @@
     owner: root
     group: root
     mode: 0644
+  notify: restart_apache

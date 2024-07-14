@@ -48,7 +48,13 @@
       owner: root
       group: root
       mode: 0644
+    register: apache
 
+  - name: Restart apache
+    service:
+      name: apache2
+      state: restart
+    when: apache.changed
 
 - hosts: db_servers
   tags: db, el
