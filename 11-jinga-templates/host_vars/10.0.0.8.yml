@@ -5,3 +5,4 @@ database_package: mariadb-server
 database_service: mariadb-server
 passwd_auth: "no"
 ssh_template_file: sshd_config_debian.j2
+sshd_service: ssh

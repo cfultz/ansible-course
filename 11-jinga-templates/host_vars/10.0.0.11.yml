@@ -5,3 +5,4 @@ database_package: mariadb
 database_service: mariadb
 passwd_auth: "no"
 ssh_template_file: sshd_config_el.j2
+sshd_service: sshd

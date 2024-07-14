@@ -3,7 +3,7 @@
   become: true
   pre_tasks:
 
-    - name: install updates for RHEL distros
+    - name: install updates for EL distros
       tags: always
       package:
         update_only: yes
