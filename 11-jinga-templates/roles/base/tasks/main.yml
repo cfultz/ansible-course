@@ -1,0 +1,42 @@
+- name: Install common packages
+  package:
+    name:
+      - htop
+      - neofetch
+
+- name: Add lfultz account
+  tags: lfultz
+  user:
+    name: lfultz
+    comment: Logan Fultz
+    uid: 1040      
+    groups: root
+    append: yes
+    shell: /bin/bash
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+
+- name: Add lfultz group
+  tags: group
+  group: 
+    name: lfultz
+    state: present
+    gid: 1040
+
+- name: Add cfultz ssh key
+  tags: ssh_keys
+  authorized_key:
+    user: cfultz
+    state: present
+    key: "{{ lookup('url', 'https://git.cfultz.wtf/cfultz.keys', split_lines=False) }}"
+
+- name: Update sshd_config for key auth only
+  tags: key_auth
+  template:
+    src: "{{ ssh_template_file  }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_sshd

@@ -1,0 +1,7 @@
+webserver_package: httpd
+webserver_service: httpd
+php_package: php
+database_package: mariadb
+database_service: mariadb
+passwd_auth: "no"
+ssh_template_file: sshd_config_el.j2

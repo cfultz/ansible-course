@@ -1,0 +1,7 @@
+webserver_package: apache2
+webserver_service: apache2
+php_package: libapache2-mod-php
+database_package: mariadb-server
+database_service: mariadb-server
+passwd_auth: "no"
+ssh_template_file: sshd_config_debian.j2
