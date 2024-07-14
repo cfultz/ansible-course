@@ -27,11 +27,10 @@
         - htop
         - neofetch
 
-  
+
 
 - hosts: web_servers
   become: true
-  tags: debian
   tasks:
 
   - name: Install apache on web servers
@@ -50,19 +49,6 @@
       group: root
       mode: 0644
 
-  - name: Add lfultz account
-    tags: debian
-    user:
-      name: lfultz
-      comment: Logan Fultz
-      uid: 1040
-      gid: 1040
-      group: sudo
-      shell: /bin/bash
-      generate_ssh_key: yes
-      ssh_key_bits: 2048
-      ssh_key_file: .ssh/id_rsa
-
 
 - hosts: db_servers
   tags: db, el
@@ -73,16 +59,3 @@
     package: 
       name: mariadb
       state: latest
-
-  - name: Add lfultz account
-    tags: el
-    user:
-      name: lfultz
-      comment: Logan Fultz
-      uid: 1040
-      gid: 1040
-      group: wheel
-      shell: /bin/bash
-      generate_ssh_key: yes
-      ssh_key_bits: 2048
-      ssh_key_file: .ssh/id_rsa

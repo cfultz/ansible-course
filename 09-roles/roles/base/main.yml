@@ -1,0 +1,25 @@
+- name: Install common packages
+  package:
+    name:
+      - htop
+      - neofetch
+
+- name: Add lfultz account
+  tags: lfultz
+  user:
+    name: lfultz
+    comment: Logan Fultz
+    uid: 1040      
+    groups: root
+    append: yes
+    shell: /bin/bash
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+
+- name: Add lfultz group
+  tags: group
+  group: 
+    name: lfultz
+    state: present
+    gid: 1040

@@ -1,0 +1,5 @@
+---
+- name: install mariadb package on db servers
+  package: 
+    name: mariadb
+    state: latest
