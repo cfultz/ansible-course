@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+  tasks: 
+
+#### Ubuntu/Debian Section ####
+
+  - name: Install apache2 package with php support
+    package:
+      name: 
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: latest
+      update_cache: yes
+

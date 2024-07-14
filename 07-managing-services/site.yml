@@ -39,27 +39,6 @@
       name: 
         - apache2
         - libapache2-mod-php
-    
-  - name: Make sure apache is running
-    tags: apache
-    service:
-      name: apache2
-      state: started
-
-  - name: Change admin email for website
-    tags: apache
-    lineinfile:
-      path: /etc/apache2/sites-available/000-default.conf
-      regexp: '^ServerAdmin'
-      line: ServerAdmin caleb@cfultz.wtf
-    register: apache2
-
-  - name: Restart apache2
-    tags: apache
-    service:
-      name: apache2
-      state: restarted
-    when: apache2.changed
   
   - name: Copy html file
     tags: website
@@ -72,11 +51,11 @@
 
 
 - hosts: db_servers
+  tags: db, el
   become: true
   tasks:
 
   - name: install mariadb package on db servers
-    tags: db, el
     package: 
       name: mariadb
       state: latest
