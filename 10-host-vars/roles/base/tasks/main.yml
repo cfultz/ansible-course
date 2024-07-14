@@ -23,3 +23,10 @@
     name: lfultz
     state: present
     gid: 1040
+
+- name: Add cfultz ssh key
+  tags: ssh_keys
+  authorized_key:
+    user: cfultz
+    state: present
+    key: "{{ lookup('url', 'https://git.cfultz.wtf/cfultz.keys', split_lines=False) }}"
